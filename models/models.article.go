@@ -30,6 +30,17 @@ func GetArticleByID(id int) (*article, error) {
 	return nil, errors.New("Article not found")
 }
 
+// Create a new article with the title and content provided
+func CreateNewArticle(title, content string) (*article, error) {
+	// Set the ID of a new article to one more than the number of articles
+	a := article{ID: len(ArticleList) + 1, Title: title, Content: content}
+
+	// Add the article to the list of articles
+	ArticleList = append(ArticleList, a)
+
+	return &a, nil
+}
+
 /********************* testing block start *************************************/
 var tmpArticleList []article
 

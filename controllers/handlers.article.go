@@ -17,6 +17,13 @@ func ShowIndexPage(c *gin.Context) {
 	}, "index.html")
 }
 
+func ShowArticleCreationPage(c *gin.Context) {
+	// call render function
+	render(c, gin.H{
+		"title": "Create New Article",
+	}, "create-article.html")
+}
+
 func GetArticle(c *gin.Context) {
 	// Check if the article ID is valid
 	if articleID, err := strconv.Atoi(c.Param("article_id")); err == nil {
@@ -36,5 +43,22 @@ func GetArticle(c *gin.Context) {
 	} else {
 		// If an invalid article ID is specified in the URL, abort with an error
 		c.AbortWithStatus(http.StatusNotFound)
+	}
+}
+
+func CreateArticle(c *gin.Context) {
+	// Obtain the POSTed title and content values
+	title := c.PostForm("title")
+	content := c.PostForm("content")
+
+	if a, err := models.CreateNewArticle(title, content); err == nil {
+		// If the article is created successfully, show success message
+		render(c, gin.H{
+			"title":   "Submission Successful",
+			"payload": a,
+		}, "submission-successful.html")
+	} else {
+		// if there was an error while creating the article, abort with an error
+		c.AbortWithStatus(http.StatusBadRequest)
 	}
 }
