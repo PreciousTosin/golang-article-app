@@ -1,5 +1,7 @@
 package routes
 
+/*
+
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -21,3 +23,4 @@ func SetUpRouter() *gin.Engine {
 
 	return router
 }
+*/
